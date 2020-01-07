@@ -4,10 +4,16 @@ import {
   TouchableHighlight,
   KeyboardAvoidingView,
   Platform,
-  Text, 
+  Text,
   TextInput
 } from "react-native";
+import FormFieldWrapper from "../FormFieldWrapper";
 import styles from "../commonStyles";
+import {
+  faDollarSign,
+  faClock,
+  faPiggyBank
+} from "@fortawesome/free-solid-svg-icons";
 
 export default class TimeFormScreen extends Component {
   static navigationOptions = {
@@ -31,27 +37,29 @@ export default class TimeFormScreen extends Component {
       >
         <View style={styles.container}>
           <Text style={styles.logo}>Budge</Text>
-          <Text>
+          <Text style={styles.description}>
             Description to tell them to enter budget and time and how it will be
             used... ?? Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
             sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
             aliquam erat volutpat.
           </Text>
           <View style={styles.form}>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => this.onChangeBudget(text)}
+            <FormFieldWrapper
+              onChange={this.onChangeBudget}
               placeholder="00.00"
+              title="Budget"
+              icon={faDollarSign}
             />
-            <TextInput
-              style={styles.input}
-              onChangeText={text => this.onChangeTime(text)}
-              placeholder="00.00.00"
+            <FormFieldWrapper
+              onChange={this.onChangeTime}
+              placeholder="00:00:00"
+              title="Timer"
+              icon={faClock}
             />
             {/* NON functional for MVP */}
-            <TouchableHighlight onPress={() => this.connectBank()}>
+            {/* <TouchableHighlight onPress={() => this.connectBank()}>
               <Text style={styles.input}>Use account to track spending</Text>
-            </TouchableHighlight>
+            </TouchableHighlight> */}
             <TouchableHighlight onPress={() => this.start()}>
               <Text style={styles.button}>START</Text>
             </TouchableHighlight>
