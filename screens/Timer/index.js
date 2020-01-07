@@ -5,7 +5,8 @@ import {
   Platform,
   Text,
   Button,
-  TextInput
+  TextInput,
+  TouchableHighlight
 } from "react-native";
 import styles from "../commonStyles";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
@@ -32,9 +33,16 @@ export default class TimerScreen extends Component {
     //   Update local storage
   }
 
+  cancel() {
+    // TODO: clear local storage
+    // navigate to timeForm page
+    const { navigate } = this.props.navigation;
+    navigate("TimeForm");
+  }
+
   render() {
     // TODO: Get below stats from local storage once set up
-    const time = "00:00:00"; 
+    const time = "00:00:00";
     const remaining = "$246";
     const spent = "$44";
     const budget = "$300";
@@ -68,13 +76,15 @@ export default class TimerScreen extends Component {
               enablesReturnKeyAutomatically={true}
               keyboardType="decimal-pad"
             />
-            {/* TODO: add on click */}
-            <Button
-              style={styles.inputTitle}
-              title="add"
+            <TouchableHighlight
               onPress={() => this.updateRemainingBudget()}
-            />
+            >
+              <Text style={styles.inputTitle}>add</Text>
+            </TouchableHighlight>
           </View>
+          <TouchableHighlight onPress={() => this.cancel()}>
+            <Text style={styles.button}>CANCEL</Text>
+          </TouchableHighlight>
         </View>
       </KeyboardAvoidingView>
     );
