@@ -4,15 +4,14 @@ import {
   TouchableHighlight,
   KeyboardAvoidingView,
   Platform,
-  Text,
-  TextInput
+  Text
 } from "react-native";
 import FormFieldWrapper from "../FormFieldWrapper";
 import styles from "../commonStyles";
 import {
   faDollarSign,
   faClock,
-  faPiggyBank
+  // faPiggyBank
 } from "@fortawesome/free-solid-svg-icons";
 
 export default class TimeFormScreen extends Component {
@@ -27,6 +26,22 @@ export default class TimeFormScreen extends Component {
       time: "",
       bank: "" // token from backend
     };
+  }
+
+  onChangeBudget(budget) {
+    this.setState({ budget })
+  }
+
+  onChangeTime(time) {
+    this.setState({ time })
+  }
+
+  start() {
+    // TODO: Store data to local storage
+   
+    // navigate to timer page
+    const { navigate } = this.props.navigation;
+    navigate('Timer')
   }
 
   render() {
