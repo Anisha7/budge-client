@@ -5,13 +5,20 @@ import { createStackNavigator } from "react-navigation-stack";
 import TimeFormScreen from '../screens/TimeForm'
 
 // Authentication tabs
+// const MainNavigation = createStackNavigator(
+//   {
+//     TimeForm: { screen: TimeFormScreen }
+//   },
+//   {
+//     initialRouteName: "TimeForm",
+//     headerMode: "screen",
+//   }
+// );
+
+// Authentication tabs
 const MainNavigation = createStackNavigator(
   {
-    TimeForm: { screen: TimeFormScreen }
-  },
-  {
-    initialRouteName: "TimeForm",
-    headerMode: "screen",
+    Home: { screen: TimeFormScreen }
   }
 );
 

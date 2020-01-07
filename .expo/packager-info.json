@@ -1,10 +1,10 @@
 {
-  "devToolsPort": 19004,
+  "devToolsPort": 19005,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 26414,
-  "webpackServerPort": 19005,
+  "packagerPid": 32659,
+  "webpackServerPort": 19006,
   "expoServerNgrokUrl": "https://gb-zjt.anonymous.budge-client.exp.direct",
   "packagerNgrokUrl": "https://packager.gb-zjt.anonymous.budge-client.exp.direct",
-  "ngrokPid": 26474
+  "ngrokPid": 32680
 }

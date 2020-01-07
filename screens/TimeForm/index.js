@@ -15,6 +15,15 @@ import {
   faPiggyBank
 } from "@fortawesome/free-solid-svg-icons";
 
+// export default class TimeFormScreen extends Component {
+
+//   render() {
+//     return (
+//       <Text style={{ fontSize: 50 }}>HELLO</Text>
+//     )
+//   }
+// }
+
 export default class TimeFormScreen extends Component {
   static navigationOptions = {
     header: null
@@ -30,6 +39,13 @@ export default class TimeFormScreen extends Component {
   }
 
   render() {
+    console.log("I MADE IT TO MAIN")
+    // return (
+    //  // <View style={{ borderColor:'blue', borderWidth:5, width:100, height: 100, backgroundColor: 'yellow' }}>
+    //     <Text style={{fontSize:300}}> HELLO THERE </Text>
+    //   // </View>
+    // )
+
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
-        fontFamily: 'Skia-Regular_Light'
+        fontFamily: 'Skia'
     },
     description: {
         marginBottom: 40,
