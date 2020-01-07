@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     logo: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
         marginBottom: 20,
         fontFamily: 'Skia'
@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
     // timer
     time: {
         color: colors.red,
-        fontSize: 35,
+        fontSize: 45,
         marginBottom: 40,
+        fontFamily: 'Skia'
     },
     stats: {
         alignItems: 'center',
@@ -73,13 +74,20 @@ const styles = StyleSheet.create({
     statTitle: {
         fontSize: 16,
         marginBottom: 10,
+        fontFamily: 'Skia'
     },
     statInfo: {
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 20
+    },
+    addCashTitle: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginBottom: 10,
+        marginTop: 20,
+        fontFamily: 'Skia'
     }
-    
   });
   
 export default styles;

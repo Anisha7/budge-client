@@ -61,26 +61,26 @@ export default class TimerScreen extends Component {
             <Text style={styles.statInfo}>{spent}</Text>
             <Text style={styles.statTitle}>Total budget</Text>
             <Text style={styles.statInfo}>{budget}</Text>
-            <Text>Used cash? Add expenses below.</Text>
-          </View>
-          <View style={styles.formField}>
-            <FontAwesomeIcon
-              icon={faDollarSign}
-              size={18}
-              style={{ color: "black" }}
-            />
-            <TextInput
-              style={styles.input}
-              onChangeText={expense => this.onChangeExpense(expense)}
-              placeholder="00.00"
-              enablesReturnKeyAutomatically={true}
-              keyboardType="decimal-pad"
-            />
-            <TouchableHighlight
-              onPress={() => this.updateRemainingBudget()}
-            >
-              <Text style={styles.inputTitle}>add</Text>
-            </TouchableHighlight>
+            <Text style={styles.addCashTitle}>Used cash? Add expenses below.</Text>
+            <View style={styles.formField}>
+                <FontAwesomeIcon
+                icon={faDollarSign}
+                size={18}
+                style={{ color: "black" }}
+                />
+                <TextInput
+                style={styles.input}
+                onChangeText={expense => this.onChangeExpense(expense)}
+                placeholder="00.00"
+                enablesReturnKeyAutomatically={true}
+                keyboardType="decimal-pad"
+                />
+                <TouchableHighlight
+                onPress={() => this.updateRemainingBudget()}
+                >
+                <Text style={styles.inputTitle}>add</Text>
+                </TouchableHighlight>
+            </View>
           </View>
           <TouchableHighlight onPress={() => this.cancel()}>
             <Text style={styles.button}>CANCEL</Text>
