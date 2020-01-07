@@ -1,5 +1,5 @@
 import React from "react";
-import { createSwitchNavigator, createAppContainer } from "react-navigation";
+import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
 import TimeFormScreen from '../screens/TimeForm'
