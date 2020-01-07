@@ -6,6 +6,7 @@ import {
 const colors = {
     black : "black",
     white : "white",
+    red: "red",
 }
 
 const styles = StyleSheet.create({
@@ -53,6 +54,25 @@ const styles = StyleSheet.create({
         borderColor: colors.black,
         borderWidth: 1,
         borderRadius: 25,
+    },
+    // timer
+    time: {
+        color: colors.red,
+        fontSize: 35,
+        marginBottom: 40,
+    },
+    stats: {
+        alignItems: 'center',
+        marginBottom: 40,
+    },
+    statTitle: {
+        fontSize: 16,
+        marginBottom: 10,
+    },
+    statInfo: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 20
     }
     
   });
