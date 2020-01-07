@@ -12,15 +12,6 @@ export default class TimerScreen extends Component {
     header: null
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      budget: "",
-      time: "",
-      bank: "" // token from backend
-    };
-  }
-
   render() {
     return (
       <KeyboardAvoidingView

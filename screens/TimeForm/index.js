@@ -26,6 +26,8 @@ export default class TimeFormScreen extends Component {
       time: "",
       bank: "" // token from backend
     };
+    this.onChangeBudget = this.onChangeBudget.bind(this)
+    this.onChangeTime = this.onChangeTime.bind(this)
   }
 
   onChangeBudget(budget) {
