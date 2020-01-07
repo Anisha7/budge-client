@@ -12,7 +12,7 @@ const FormFieldWrapper = ({ onChange, placeholder, title, icon }) => {
         <View style={styles.formField}>
             <FontAwesomeIcon
               icon={icon}
-              size={32}
+              size={18}
               style={{ color: "black" }}
             />
             <TextInput
@@ -20,7 +20,7 @@ const FormFieldWrapper = ({ onChange, placeholder, title, icon }) => {
               onChangeText={text => onChange(text)}
               placeholder={placeholder}
             />
-            <Text>{title}</Text>
+            <Text style={styles.inputTitle}>{title}</Text>
         </View>
     )
 }
