@@ -4,8 +4,9 @@ import {
   TouchableHighlight,
   KeyboardAvoidingView,
   Platform,
+  Text, 
+  TextInput
 } from "react-native";
-import { Text, TextInput } from 'react-native-custom-fonts';
 import styles from "../commonStyles";
 
 export default class TimeFormScreen extends Component {

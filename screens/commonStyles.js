@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: "center",
         alignItems: 'center',
+        padding: 20,
     },
     logo: {
         fontSize: 24,
         fontWeight: 'bold',
-        fontFamily: 'Khula',
-        fontWeight: 'normal',
+        marginBottom: 20,
     },
     form: {
         alignItems: 'center',
