@@ -20,9 +20,11 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        fontFamily: 'Skia'
     },
     description: {
         marginBottom: 40,
+        fontFamily: 'Skia'
     },
     form: {
         alignItems: 'center',
@@ -40,10 +42,12 @@ const styles = StyleSheet.create({
         width: "70%",
         marginLeft: 10,
         marginRight: 10,
+        fontFamily: 'Skia'
     },
     inputTitle: {
         fontSize: 16,
         color: colors.black,
+        fontFamily: 'Skia'
     },
     button: {
         marginTop: 20,
@@ -54,6 +58,7 @@ const styles = StyleSheet.create({
         borderColor: colors.black,
         borderWidth: 1,
         borderRadius: 25,
+        fontFamily: 'Skia'
     },
     // timer
     time: {

@@ -42,5 +42,8 @@
     "jest-expo": "^35.0.0",
     "react-test-renderer": "^16.12.0"
   },
+  "rnpm": {
+    "assets": ["assets/fonts/"]
+   },
   "private": true
 }

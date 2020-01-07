@@ -1,16 +1,27 @@
-import React from 'react'
-import Main from './routes/main'
+import React from "react";
+import Main from "./routes/main";
+import * as Font from "expo-font";
+import { Text } from "react-native";
 
+class App extends React.Component {
+  state = {
+    fontLoaded: false
+  };
 
-// import { createStore } from 'redux'
-// import { Provider } from 'react-redux'
-// import reducers from './reducers'
-// const store = createStore(reducers)
+  async componentDidMount() {
+    await Font.loadAsync({
+      Skia: require("./assets/fonts/Skia-Regular_Light.ttf")
+    });
+    this.setState({ fontLoaded: true });
+  }
 
-const App = () => (
-  // <Provider store={store}>
-    <Main />
-  // </Provider>
-)
+  render() {
+    console.log(Main);
+    if (this.state.fontLoaded) {
+      return <Main />;
+    }
+    return <Text>Loading...</Text>;
+  }
+}
 
 export default App;

@@ -47,6 +47,7 @@ export default class TimeFormScreen extends Component {
   }
 
   render() {
+
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
