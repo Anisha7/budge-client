@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "creditswag",
-    "slug": "creditswag",
+    "name": "budge-client",
+    "slug": "budge-client",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [

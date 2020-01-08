@@ -35,12 +35,31 @@ export default class TimeFormScreen extends Component {
   }
 
   onChangeTime(time) {
-    this.setState({ time })
+    console.log(time)
+    if (time.length > 8) {
+      return
+    }
+
+    if (time.length < this.state.time.length) {
+      this.setState({time})
+      return
+    }
+    let formattedTime = ''
+    for (let i=0; i<time.length; i++) {
+      let char = time[i]
+      if ((i==2 || i == 5) && char !== ":") {
+        formattedTime += ':'
+      }
+      formattedTime += char
+    }
+
+    this.setState({ time: formattedTime })
   }
 
   start() {
+    // TODO: make sure time and budget are valid! budget > $1 and 00.00.00 < time < any:59:59
     // TODO: Store data to local storage
-   
+    
     // navigate to timer page
     const { navigate } = this.props.navigation;
     navigate('Timer')
@@ -67,12 +86,14 @@ export default class TimeFormScreen extends Component {
               placeholder="00.00"
               title="Budget"
               icon={faDollarSign}
+              value={this.state.budget}
             />
             <FormFieldWrapper
               onChange={this.onChangeTime}
               placeholder="00:00:00"
               title="Timer"
               icon={faClock}
+              value={this.state.time}
             />
             {/* NON functional for MVP */}
             {/* <TouchableHighlight onPress={() => this.connectBank()}>

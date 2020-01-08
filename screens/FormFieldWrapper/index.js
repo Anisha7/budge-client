@@ -3,7 +3,7 @@ import { View, Text, TextInput } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import styles from "../commonStyles";
 
-const FormFieldWrapper = ({ onChange, placeholder, title, icon }) => {
+const FormFieldWrapper = ({ onChange, placeholder, title, icon, value }) => {
   return (
     <View style={styles.formField}>
       <FontAwesomeIcon icon={icon} size={18} style={{ color: "black" }} />
@@ -13,6 +13,7 @@ const FormFieldWrapper = ({ onChange, placeholder, title, icon }) => {
         placeholder={placeholder}
         enablesReturnKeyAutomatically={true}
         keyboardType="decimal-pad"
+        value={value}
       />
       <Text style={styles.inputTitle}>{title}</Text>
     </View>
