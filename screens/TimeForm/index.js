@@ -1,19 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
   KeyboardAvoidingView,
   Platform,
   Text
-} from "react-native";
-import FormFieldWrapper from "../FormFieldWrapper";
-import styles from "../commonStyles";
+} from 'react-native';
+import FormFieldWrapper from '../FormFieldWrapper';
+import styles from '../commonStyles';
 import {
   faDollarSign,
   faClock,
   // faPiggyBank
-} from "@fortawesome/free-solid-svg-icons";
-import { AnDate } from "andatelib";
+} from '@fortawesome/free-solid-svg-icons';
+import { AnDate } from 'andatelib';
+import { _storeData, _retrieveData } from '../../helpers/store';
 
 export default class TimeFormScreen extends Component {
   static navigationOptions = {
@@ -23,9 +24,9 @@ export default class TimeFormScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      budget: "",
-      time: "",
-      bank: "" // token from backend
+      budget: '',
+      time: '',
+      bank: '' // token from backend
     };
     this.onChangeBudget = this.onChangeBudget.bind(this)
     this.onChangeTime = this.onChangeTime.bind(this)
@@ -47,7 +48,7 @@ export default class TimeFormScreen extends Component {
     let formattedTime = ''
     for (let i=0; i<time.length; i++) {
       let char = time[i]
-      if ((i==2 || i == 5) && char !== ":") {
+      if ((i==2 || i == 5) && char !== ':') {
         formattedTime += ':'
       }
       formattedTime += char
@@ -56,7 +57,7 @@ export default class TimeFormScreen extends Component {
     this.setState({ time: formattedTime })
   }
 
-  // convert string hrs:mins:secs to object with numbers & add to current time
+  // converts string hrs:mins:secs to object with numbers & add to current time
   timeLeft(time) {
     let hours = time.length > 1 ? parseInt(time.slice(0,2)) : (time.length > 0 ? parseInt(time.slice(0,1)) : 0);
     let minutes = time.length > 4 ? parseInt(time.slice(3,5)) : (time.length > 3 ? parseInt(time.slice(3,4)) : 0);
@@ -65,14 +66,25 @@ export default class TimeFormScreen extends Component {
     // TODO: if minutes or seconds are more than 60, throw error
 
     let currDate = new AnDate()
-    return currDate.consecutiveDates(1, {hours, minutes, seconds})[0]
+    return currDate.consecutiveDates(1, {hours, minutes, seconds})[0].getTime()
   }
 
-  start() {
+  async start() {
     // TODO: make sure time and budget are valid! budget > $1 and 00.00.00 < time < any:59:59
-    // TODO: Calculate end time from start time in a try/catch block
-    console.log(this.timeLeft(this.state.time))
+    // TODO: Calculate end time from start time in a try/catch block ^
+    let endTime = this.timeLeft(this.state.time)
+    console.log(endTime)
+    let data = {
+      budget: this.state.budget,
+      endTime: endTime
+    }
     // TODO: Store budget and end time to local storage
+    await _storeData('timerData', JSON.stringify(data))
+    console.log(await _retrieveData('timerData'))
+    console.log("timerData stored")
+    // await _storeData('endTime', endTime)
+    // console.log("endTime stored")
+    console.log(await _retrieveData('timerData'))
     // navigate to timer page
     const { navigate } = this.props.navigation;
     navigate('Timer')
@@ -82,7 +94,7 @@ export default class TimeFormScreen extends Component {
 
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
         style={{ flex: 1 }}
       >
         <View style={styles.container}>
@@ -96,15 +108,15 @@ export default class TimeFormScreen extends Component {
           <View style={styles.form}>
             <FormFieldWrapper
               onChange={this.onChangeBudget}
-              placeholder="00.00"
-              title="Budget"
+              placeholder='00.00'
+              title='Budget'
               icon={faDollarSign}
               value={this.state.budget}
             />
             <FormFieldWrapper
               onChange={this.onChangeTime}
-              placeholder="00:00:00"
-              title="Timer"
+              placeholder='00:00:00'
+              title='Timer'
               icon={faClock}
               value={this.state.time}
             />
