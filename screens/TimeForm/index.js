@@ -75,8 +75,9 @@ export default class TimeFormScreen extends Component {
     let endTime = this.timeLeft(this.state.time)
     console.log(endTime)
     let data = {
-      budget: this.state.budget,
-      endTime: endTime
+      budget: parseInt(this.state.budget),
+      endTime: endTime,
+      spent: 0,
     }
     // TODO: Store budget and end time to local storage
     await _storeData('timerData', JSON.stringify(data))
