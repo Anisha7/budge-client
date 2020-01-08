@@ -13,6 +13,7 @@ import {
   faClock,
   // faPiggyBank
 } from "@fortawesome/free-solid-svg-icons";
+import { AnDate } from "andatelib";
 
 export default class TimeFormScreen extends Component {
   static navigationOptions = {
@@ -35,7 +36,6 @@ export default class TimeFormScreen extends Component {
   }
 
   onChangeTime(time) {
-    console.log(time)
     if (time.length > 8) {
       return
     }
@@ -56,10 +56,23 @@ export default class TimeFormScreen extends Component {
     this.setState({ time: formattedTime })
   }
 
+  // convert string hrs:mins:secs to object with numbers & add to current time
+  timeLeft(time) {
+    let hours = time.length > 1 ? parseInt(time.slice(0,2)) : (time.length > 0 ? parseInt(time.slice(0,1)) : 0);
+    let minutes = time.length > 4 ? parseInt(time.slice(3,5)) : (time.length > 3 ? parseInt(time.slice(3,4)) : 0);
+    let seconds = time.length > 7 ? parseInt(time.slice(6,8)) : (time.length > 6 ? parseInt(time.slice(6,7)) : 0);
+    
+    // TODO: if minutes or seconds are more than 60, throw error
+
+    let currDate = new AnDate()
+    return currDate.consecutiveDates(1, {hours, minutes, seconds})[0]
+  }
+
   start() {
     // TODO: make sure time and budget are valid! budget > $1 and 00.00.00 < time < any:59:59
-    // TODO: Store data to local storage
-    
+    // TODO: Calculate end time from start time in a try/catch block
+    console.log(this.timeLeft(this.state.time))
+    // TODO: Store budget and end time to local storage
     // navigate to timer page
     const { navigate } = this.props.navigation;
     navigate('Timer')

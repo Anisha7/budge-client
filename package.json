@@ -19,6 +19,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-native-fontawesome": "^0.1.0",
+    "andatelib": "^1.1.2",
     "email-validator": "^2.0.4",
     "enzyme": "^3.10.0",
     "expo": "^35.0.0",
