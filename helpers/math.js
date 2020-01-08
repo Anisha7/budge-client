@@ -3,7 +3,7 @@
 import { AnDate } from "andatelib";
 
 export function calculateTimeLeft(time) {
-    console.log(time)
+    // console.log(time)
     const diff = time - new AnDate().getTime();
     let delta = diff / 1000;
     // calculate (and subtract) whole hours
@@ -16,6 +16,6 @@ export function calculateTimeLeft(time) {
 
     // what's left is seconds
     const seconds = Math.floor(delta % 60);
-    console.log(hours, minutes, seconds, delta)
+    // console.log(hours, minutes, seconds, delta)
     return `${Math.abs(hours)}:${minutes}:${seconds}`;
   }

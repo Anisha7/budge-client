@@ -11,7 +11,7 @@ import {
 import styles from "../commonStyles";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { _storeData, _retrieveData } from "../../helpers/store";
+import { _storeData, _retrieveData, _removeData } from "../../helpers/store";
 import { calculateTimeLeft } from "../../helpers/math";
 
 export default class TimerScreen extends Component {
@@ -24,47 +24,79 @@ export default class TimerScreen extends Component {
     this.state = {
       data: null,
       expense: "",
-      timer: null,
       timeLeft: "loading"
     };
     this.onChangeExpense = this.onChangeExpense.bind(this);
-    this.startTimer = this.startTimer.bind(this)
+    this.startTimer = this.startTimer.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.timer = null;
   }
 
   componentDidMount() {
     this.getStoredData().then(() => {
-        this.startTimer();
-    })
+      this.startTimer();
+    });
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.timer);
+    clearInterval(this.timer);
   }
 
   startTimer() {
     var self = this;
     const endTime = this.state.data.endTime;
-    const timer = setInterval(function() {
+    this.timer = setInterval(function() {
       const timeLeft = calculateTimeLeft(endTime);
-      self.setState({timeLeft})
+      self.setState({ timeLeft });
     }, 1000);
-
-    this.setState({timer})
+    console.log("TIMER SET: ", this.timer);
   }
 
   onChangeExpense(expense) {
+      console.log("********** HERE **********")
+    console.log("Changing expense: ", expense);
     this.setState({ expense });
+    console.log(this.state.expense);
   }
 
   updateRemainingBudget() {
+    if (this.state.data === null) {
+      return;
+    }
+    let amount = this.state.expense;
     //   Update local storage
+    // QUESTION: Can I update state like this?
+    console.log(this.state.data);
+    let temp = this.state.data;
+    console.log(temp.spent, amount, parseFloat(amount));
+    temp.spent += parseFloat(amount);
+    this.setState({ data: temp });
+    // this.state.data.spent += parseFloat(amount)
+    console.log(this.state.data);
+    // QUESTION: Does this need to have an await?
+    _storeData("timerData", JSON.stringify(this.state.data));
   }
 
-  cancel() {
+  // TODO -- BUGGY: FIX THIS
+  async cancel() {
     // TODO: clear local storage
     // navigate to timeForm page
+    console.log("TIME: ", this.state.timer);
+    console.log("TIMER: ", this.timer);
+    clearInterval(this.timer);
+    console.log("TIME: ", this.state.timer);
+    this.setState({
+      data: null,
+      expense: "",
+      timer: null,
+      timeLeft: "loading"
+    });
     const { navigate } = this.props.navigation;
-    navigate("TimeForm");
+    await _removeData("timerData").then(async () => {
+      console.log("removed");
+      console.log(await _retrieveData("timerData"));
+      navigate("TimeForm");
+    });
   }
 
   async getStoredData() {
@@ -87,9 +119,9 @@ export default class TimerScreen extends Component {
     if (this.state.data !== null) {
       let endTime = this.state.data.endTime;
       time = calculateTimeLeft(endTime);
-    //   setInterval(function() {
-    //     time = calculateTimeLeft(endTime);
-    //   }, 1000);
+      //   setInterval(function() {
+      //     time = calculateTimeLeft(endTime);
+      //   }, 1000);
       remaining = `$${this.state.data.budget - this.state.data.spent}`;
       spent = `$${this.state.data.spent}`;
       budget = `$${this.state.data.budget}`;

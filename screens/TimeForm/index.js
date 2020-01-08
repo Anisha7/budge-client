@@ -88,6 +88,11 @@ export default class TimeFormScreen extends Component {
     console.log(await _retrieveData('timerData'))
     // navigate to timer page
     const { navigate } = this.props.navigation;
+    this.setState({
+      budget: '',
+      time: '',
+      bank: ''
+    })
     navigate('Timer')
   }
 
