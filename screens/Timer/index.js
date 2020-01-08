@@ -53,10 +53,7 @@ export default class TimerScreen extends Component {
   }
 
   onChangeExpense(expense) {
-      console.log("********** HERE **********")
-    console.log("Changing expense: ", expense);
     this.setState({ expense });
-    console.log(this.state.expense);
   }
 
   updateRemainingBudget() {
@@ -64,27 +61,19 @@ export default class TimerScreen extends Component {
       return;
     }
     let amount = this.state.expense;
-    //   Update local storage
-    // QUESTION: Can I update state like this?
-    console.log(this.state.data);
     let temp = this.state.data;
-    console.log(temp.spent, amount, parseFloat(amount));
     temp.spent += parseFloat(amount);
     this.setState({ data: temp });
-    // this.state.data.spent += parseFloat(amount)
-    console.log(this.state.data);
     // QUESTION: Does this need to have an await?
     _storeData("timerData", JSON.stringify(this.state.data));
   }
 
   // TODO -- BUGGY: FIX THIS
   async cancel() {
-    // TODO: clear local storage
-    // navigate to timeForm page
-    console.log("TIME: ", this.state.timer);
+    // Clear local storage
     console.log("TIMER: ", this.timer);
     clearInterval(this.timer);
-    console.log("TIME: ", this.state.timer);
+    console.log("TIMER: ", this.timer);
     this.setState({
       data: null,
       expense: "",
@@ -95,14 +84,14 @@ export default class TimerScreen extends Component {
     await _removeData("timerData").then(async () => {
       console.log("removed");
       console.log(await _retrieveData("timerData"));
+
+      // Navigate to timeForm page
       navigate("TimeForm");
     });
   }
 
   async getStoredData() {
     await _retrieveData("timerData").then(data => {
-      console.log("HERE");
-      console.log(data);
       this.setState({ data: JSON.parse(data) });
     });
   }
@@ -115,13 +104,10 @@ export default class TimerScreen extends Component {
     let remaining = "loading";
     let spent = "loading";
     let budget = "loading";
-    // TODO: Get below stats from local storage once set up
+    // Gets stats from local storage once set up
     if (this.state.data !== null) {
       let endTime = this.state.data.endTime;
       time = calculateTimeLeft(endTime);
-      //   setInterval(function() {
-      //     time = calculateTimeLeft(endTime);
-      //   }, 1000);
       remaining = `$${this.state.data.budget - this.state.data.spent}`;
       spent = `$${this.state.data.spent}`;
       budget = `$${this.state.data.budget}`;

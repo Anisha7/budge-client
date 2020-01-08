@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AnDate } from 'andatelib';
 import { _storeData, _retrieveData } from '../../helpers/store';
+import { calculateEndTime } from "../../helpers/math";
 
 export default class TimeFormScreen extends Component {
   static navigationOptions = {
@@ -57,22 +58,11 @@ export default class TimeFormScreen extends Component {
     this.setState({ time: formattedTime })
   }
 
-  // converts string hrs:mins:secs to object with numbers & add to current time
-  timeLeft(time) {
-    let hours = time.length > 1 ? parseInt(time.slice(0,2)) : (time.length > 0 ? parseInt(time.slice(0,1)) : 0);
-    let minutes = time.length > 4 ? parseInt(time.slice(3,5)) : (time.length > 3 ? parseInt(time.slice(3,4)) : 0);
-    let seconds = time.length > 7 ? parseInt(time.slice(6,8)) : (time.length > 6 ? parseInt(time.slice(6,7)) : 0);
-    
-    // TODO: if minutes or seconds are more than 60, throw error
-
-    let currDate = new AnDate()
-    return currDate.consecutiveDates(1, {hours, minutes, seconds})[0].getTime()
-  }
-
   async start() {
     // TODO: make sure time and budget are valid! budget > $1 and 00.00.00 < time < any:59:59
     // TODO: Calculate end time from start time in a try/catch block ^
-    let endTime = this.timeLeft(this.state.time)
+    console.log("STARTING with ", this.state.time)
+    let endTime = calculateEndTime(this.state.time)
     console.log(endTime)
     let data = {
       budget: parseInt(this.state.budget),
@@ -81,11 +71,6 @@ export default class TimeFormScreen extends Component {
     }
     // TODO: Store budget and end time to local storage
     await _storeData('timerData', JSON.stringify(data))
-    console.log(await _retrieveData('timerData'))
-    console.log("timerData stored")
-    // await _storeData('endTime', endTime)
-    // console.log("endTime stored")
-    console.log(await _retrieveData('timerData'))
     // navigate to timer page
     const { navigate } = this.props.navigation;
     this.setState({
@@ -97,7 +82,6 @@ export default class TimeFormScreen extends Component {
   }
 
   render() {
-
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : null}
