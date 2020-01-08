@@ -38,6 +38,12 @@ export function calculateEndTime(time) {
       : 0;
 
   // TODO: if minutes or seconds are more than 60, throw error
+  if (minutes > 60) {
+      throw "Please provide valid minutes!"
+  }
+  if (seconds > 60) {
+    throw "Please provide valid seconds"
+  }
 
   let currDate = Date.now();
   let ms = 0;

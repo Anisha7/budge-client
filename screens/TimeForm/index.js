@@ -26,7 +26,8 @@ export default class TimeFormScreen extends Component {
     this.state = {
       budget: '',
       time: '',
-      bank: '' // token from backend
+      bank: '', // token from backend
+      error: null,
     };
     this.onChangeBudget = this.onChangeBudget.bind(this)
     this.onChangeTime = this.onChangeTime.bind(this)
@@ -60,22 +61,29 @@ export default class TimeFormScreen extends Component {
   async start() {
     // TODO: make sure time and budget are valid! budget > $1 and 00.00.00 < time < any:59:59
     // TODO: Calculate end time from start time in a try/catch block ^
-    let endTime = calculateEndTime(this.state.time)
-    let data = {
-      budget: parseInt(this.state.budget),
-      endTime: endTime,
-      spent: 0,
+    try {
+      let endTime = calculateEndTime(this.state.time)
+      let data = {
+        budget: parseInt(this.state.budget),
+        endTime: endTime,
+        spent: 0,
+      }
+      // TODO: Store budget and end time to local storage
+      await _storeData('timerData', JSON.stringify(data))
+      // navigate to timer page
+      const { navigate } = this.props.navigation;
+      this.setState({
+        budget: '',
+        time: '',
+        bank: '',
+        error: null,
+      })
+      navigate('Timer')
+    } catch (err) {
+      // if calculateEndTime throws an error
+      this.setState({error: err})
     }
-    // TODO: Store budget and end time to local storage
-    await _storeData('timerData', JSON.stringify(data))
-    // navigate to timer page
-    const { navigate } = this.props.navigation;
-    this.setState({
-      budget: '',
-      time: '',
-      bank: ''
-    })
-    navigate('Timer')
+    
   }
 
   render() {
@@ -107,6 +115,7 @@ export default class TimeFormScreen extends Component {
               icon={faClock}
               value={this.state.time}
             />
+            <Text>{this.state.error}</Text>
             {/* NON functional for MVP */}
             {/* <TouchableHighlight onPress={() => this.connectBank()}>
               <Text style={styles.input}>Use account to track spending</Text>
