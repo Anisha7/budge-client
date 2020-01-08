@@ -13,7 +13,6 @@ import {
   faClock,
   // faPiggyBank
 } from '@fortawesome/free-solid-svg-icons';
-import { AnDate } from 'andatelib';
 import { _storeData, _retrieveData } from '../../helpers/store';
 import { calculateEndTime } from "../../helpers/math";
 
@@ -61,9 +60,7 @@ export default class TimeFormScreen extends Component {
   async start() {
     // TODO: make sure time and budget are valid! budget > $1 and 00.00.00 < time < any:59:59
     // TODO: Calculate end time from start time in a try/catch block ^
-    console.log("STARTING with ", this.state.time)
     let endTime = calculateEndTime(this.state.time)
-    console.log(endTime)
     let data = {
       budget: parseInt(this.state.budget),
       endTime: endTime,

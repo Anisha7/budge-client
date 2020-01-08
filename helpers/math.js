@@ -1,22 +1,18 @@
-// Math credit: https://stackoverflow.com/questions/13903897/javascript-return-number-of-days-hours-minutes-seconds-between-two-dates
-
-import { AnDate } from "andatelib";
 
 export function calculateTimeLeft(time) {
-  // console.log(time)
-  const diff = time - new AnDate().getTime();
-  let delta = diff / 1000;
+  const diff = time - Date.now();
+
+  let totalSeconds = diff / 1000;
   // calculate (and subtract) whole hours
-  const hours = Math.floor(delta / 3600) % 24;
-  delta -= hours * 3600;
+  const hours = Math.floor(totalSeconds / 3600);
+  totalSeconds -= hours * 3600;
 
   // calculate (and subtract) whole minutes
-  const minutes = Math.floor(delta / 60) % 60;
-  delta -= minutes * 60;
+  const minutes = Math.floor(totalSeconds / 60) % 60;
+  totalSeconds -= minutes * 60;
 
   // what's left is seconds
-  const seconds = Math.floor(delta % 60);
-  // console.log(hours, minutes, seconds, delta)
+  const seconds = Math.floor(totalSeconds % 60);
   return `${Math.abs(hours)}:${minutes}:${seconds}`;
 }
 
@@ -43,6 +39,12 @@ export function calculateEndTime(time) {
 
   // TODO: if minutes or seconds are more than 60, throw error
 
-  let currDate = new AnDate();
-  return currDate.consecutiveDates(1, { hours, minutes, seconds })[0].getTime();
+  let currDate = Date.now();
+  let ms = 0;
+  ms += seconds * 1000;
+  ms += minutes * 1000 * 60;
+  ms += hours * 1000 * 60 * 60;
+  currDate += ms;
+  return currDate;
+
 }

@@ -38,6 +38,12 @@ export default class TimerScreen extends Component {
     });
   }
 
+  componentDidUpdate(){
+    if(this.timer === null){ 
+      clearInterval(this.interval);
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.timer);
   }
@@ -93,6 +99,8 @@ export default class TimerScreen extends Component {
   async getStoredData() {
     await _retrieveData("timerData").then(data => {
       this.setState({ data: JSON.parse(data) });
+      console.log("Set state data to: ", data) 
+      console.log("EndTime readable: ", calculateTimeLeft(this.state.data.endTime))
     });
   }
 
