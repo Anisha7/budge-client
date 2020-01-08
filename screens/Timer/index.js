@@ -12,7 +12,7 @@ import styles from "../commonStyles";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { _storeData, _retrieveData } from "../../helpers/store";
-import { AnDate } from "andatelib";
+import { calculateTimeLeft } from "../../helpers/math";
 
 export default class TimerScreen extends Component {
   static navigationOptions = {
@@ -23,9 +23,33 @@ export default class TimerScreen extends Component {
     super(props);
     this.state = {
       data: null,
-      expense: ""
+      expense: "",
+      timer: null,
+      timeLeft: "loading"
     };
     this.onChangeExpense = this.onChangeExpense.bind(this);
+    this.startTimer = this.startTimer.bind(this)
+  }
+
+  componentDidMount() {
+    this.getStoredData().then(() => {
+        this.startTimer();
+    })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
+  startTimer() {
+    var self = this;
+    const endTime = this.state.data.endTime;
+    const timer = setInterval(function() {
+      const timeLeft = calculateTimeLeft(endTime);
+      self.setState({timeLeft})
+    }, 1000);
+
+    this.setState({timer})
   }
 
   onChangeExpense(expense) {
@@ -45,42 +69,27 @@ export default class TimerScreen extends Component {
 
   async getStoredData() {
     await _retrieveData("timerData").then(data => {
-        console.log("HERE")
-        console.log(data) 
-        this.setState({ data: JSON.parse(data) });
+      console.log("HERE");
+      console.log(data);
+      this.setState({ data: JSON.parse(data) });
     });
   }
 
-  // Math credit: https://stackoverflow.com/questions/13903897/javascript-return-number-of-days-hours-minutes-seconds-between-two-dates
-  calculateTimeLeft(time) {
-    console.log(time)
-    const diff = time - new AnDate().getTime();
-    let delta = diff / 1000;
-    // calculate (and subtract) whole hours
-    const hours = Math.floor(delta / 3600) % 24;
-    delta -= hours * 3600;
-
-    // calculate (and subtract) whole minutes
-    const minutes = Math.floor(delta / 60) % 60;
-    delta -= minutes * 60;
-
-    // what's left is seconds
-    const seconds = Math.floor(delta % 60);
-    console.log(hours, minutes, seconds, delta)
-    return `${Math.abs(hours)}:${minutes}:${seconds}`;
-  }
-
   render() {
-    if (this.state.data === null) {
-        this.getStoredData()
-    }
+    // if (this.state.data === null) {
+    //   this.getStoredData();
+    // }
     let time = "loading";
     let remaining = "loading";
     let spent = "loading";
     let budget = "loading";
     // TODO: Get below stats from local storage once set up
     if (this.state.data !== null) {
-      time = this.calculateTimeLeft(this.state.data.endTime);
+      let endTime = this.state.data.endTime;
+      time = calculateTimeLeft(endTime);
+    //   setInterval(function() {
+    //     time = calculateTimeLeft(endTime);
+    //   }, 1000);
       remaining = `$${this.state.data.budget - this.state.data.spent}`;
       spent = `$${this.state.data.spent}`;
       budget = `$${this.state.data.budget}`;
