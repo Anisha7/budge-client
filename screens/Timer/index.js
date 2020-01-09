@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
-  Button,
   TextInput,
   TouchableHighlight
 } from "react-native";
@@ -24,7 +23,8 @@ export default class TimerScreen extends Component {
     this.state = {
       data: null,
       expense: "",
-      timeLeft: "loading"
+      timeLeft: "loading",
+      isTimerRunning: false
     };
     this.onChangeExpense = this.onChangeExpense.bind(this);
     this.startTimer = this.startTimer.bind(this);
@@ -38,8 +38,8 @@ export default class TimerScreen extends Component {
     });
   }
 
-  componentDidUpdate(){
-    if(this.timer === null){ 
+  componentDidUpdate() {
+    if (this.timer === null) {
       clearInterval(this.interval);
     }
   }
@@ -50,12 +50,25 @@ export default class TimerScreen extends Component {
 
   startTimer() {
     var self = this;
+    this.setState({ isTimerRunning: true });
     const endTime = this.state.data.endTime;
-    this.timer = setInterval(function() {
+    // Starting timer
+    this.timer = setInterval(async function() {
       const timeLeft = calculateTimeLeft(endTime);
       self.setState({ timeLeft });
+      // End timer and go to summary when timer reaches 0
+      if (endTime <= Date.now()) {
+        clearInterval(this.timer);
+        self.setState({
+          data: null,
+          expense: "",
+          timer: null,
+          timeLeft: "loading"
+        });
+        const { navigate } = self.props.navigation;
+        navigate("Summary");
+      }
     }, 1000);
-    console.log("TIMER SET: ", this.timer);
   }
 
   onChangeExpense(expense) {
@@ -74,12 +87,9 @@ export default class TimerScreen extends Component {
     _storeData("timerData", JSON.stringify(this.state.data));
   }
 
-  // TODO -- BUGGY: FIX THIS
   async cancel() {
-    // Clear local storage
-    console.log("TIMER: ", this.timer);
+    // Stop timer
     clearInterval(this.timer);
-    console.log("TIMER: ", this.timer);
     this.setState({
       data: null,
       expense: "",
@@ -87,11 +97,9 @@ export default class TimerScreen extends Component {
       timeLeft: "loading"
     });
     const { navigate } = this.props.navigation;
+    // Remove data from local storage
     await _removeData("timerData").then(async () => {
-      console.log("removed");
-      console.log(await _retrieveData("timerData"));
-
-      // Navigate to timeForm page
+      // Navigate back to timeForm page
       navigate("TimeForm");
     });
   }
@@ -99,27 +107,15 @@ export default class TimerScreen extends Component {
   async getStoredData() {
     await _retrieveData("timerData").then(data => {
       this.setState({ data: JSON.parse(data) });
-      console.log("Set state data to: ", data) 
-      console.log("EndTime readable: ", calculateTimeLeft(this.state.data.endTime))
     });
   }
 
   render() {
-    // if (this.state.data === null) {
-    //   this.getStoredData();
-    // }
-    let time = "loading";
-    let remaining = "loading";
-    let spent = "loading";
-    let budget = "loading";
-    // Gets stats from local storage once set up
-    if (this.state.data !== null) {
-      let endTime = this.state.data.endTime;
-      time = calculateTimeLeft(endTime);
-      remaining = `$${this.state.data.budget - this.state.data.spent}`;
-      spent = `$${this.state.data.spent}`;
-      budget = `$${this.state.data.budget}`;
-    }
+    const remaining = this.state.data
+      ? `$${this.state.data.budget - this.state.data.spent}`
+      : "loading";
+    const spent = this.state.data ? `$${this.state.data.spent}` : "loading";
+    const budget = this.state.data ? `$${this.state.data.budget}` : "loading";
 
     return (
       <KeyboardAvoidingView
@@ -128,7 +124,7 @@ export default class TimerScreen extends Component {
       >
         <View style={styles.container}>
           <Text style={styles.logo}>Budge</Text>
-          <Text style={styles.time}>{time}</Text>
+          <Text style={styles.time}>{this.state.timeLeft}</Text>
           <View style={styles.stats}>
             <Text style={styles.statTitle}>Remaining budget</Text>
             <Text style={styles.statInfo}>{remaining}</Text>

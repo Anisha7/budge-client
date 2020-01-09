@@ -30,6 +30,7 @@ export default class SummaryScreen extends Component {
         <View style={styles.container}>
             <Text> Hello </Text>
         </View>
+        {/* TODO: ok button that clears local storage */}
       </KeyboardAvoidingView>
     );
   }
