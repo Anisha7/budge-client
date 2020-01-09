@@ -49,7 +49,7 @@ export default class SummaryScreen extends Component {
     const budget = this.state.data ? `$${this.state.data.budget}` : "loading";
 
     const diff = this.state.data ? this.state.data.budget - this.state.data.spent : 0
-    const savedString = diff < 0 ? `You spent ${Math.abs(diff)} over budget!` : `You spent ${Math.abs(diff)} under budget`
+    const savedString = diff < 0 ? `You spent $${Math.abs(diff)} over budget!` : `You spent $${Math.abs(diff)} under budget`
     return (
       <View style={styles.container}>
           <Text style={styles.logo}>Budge</Text>
@@ -62,7 +62,7 @@ export default class SummaryScreen extends Component {
             <Text style={styles.statTitle}>Total budget</Text>
             <Text style={styles.statInfo}>{budget}</Text>
             <Text style={styles.summary}>
-              You spent ${savedString} under budget
+              {savedString}
             </Text>
           </View>
           <TouchableHighlight onPress={() => this.ok()}>
