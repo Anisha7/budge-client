@@ -87,6 +87,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 20,
         fontFamily: 'Skia'
+    },
+    // authentication
+    recommendation: {
+        color: 'red',
+    },
+    otherAuthOptions: {
+        flexDirection: 'row'
     }
   });
   
