@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import FormFieldWrapper from "../FormFieldWrapper";
 import styles from "../commonStyles";
-import { faPersonBooth } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export default class LoginScreen extends Component {
   static navigationOptions = {
@@ -41,7 +41,7 @@ export default class LoginScreen extends Component {
               onChange={email => this.setState({ email })}
               placeholder="example@example.com"
               title="Email"
-              icon={faPersonBooth} // TODO
+              icon={faEnvelope} // TODO
               value={this.state.email}
               keyboardType="default"
             />
@@ -49,7 +49,7 @@ export default class LoginScreen extends Component {
               onChange={secret => this.setState({ secret })}
               placeholder="******"
               title="Secret"
-              icon={faPersonBooth} // TODO
+              icon={faLock} // TODO
               value={this.state.secret}
               secureTextEntry={true}
               keyboardType="default"

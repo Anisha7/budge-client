@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import FormFieldWrapper from "../FormFieldWrapper";
 import styles from "../commonStyles";
-import { faPersonBooth } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export default class SignupScreen extends Component {
   static navigationOptions = {
@@ -43,7 +43,7 @@ export default class SignupScreen extends Component {
               onChange={name => this.setState({ name })}
               placeholder="First Last"
               title="Name"
-              icon={faPersonBooth} // TODO
+              icon={faUser} // TODO
               value={this.state.name}
               keyboardType="default"
             />
@@ -51,7 +51,7 @@ export default class SignupScreen extends Component {
               onChange={email => this.setState({ email })}
               placeholder="example@example.com"
               title="Email"
-              icon={faPersonBooth} // TODO
+              icon={faEnvelope} // TODO
               value={this.state.email}
               keyboardType="default"
             />
@@ -59,7 +59,7 @@ export default class SignupScreen extends Component {
               onChange={secret => this.setState({ secret })}
               placeholder="******"
               title="Secret"
-              icon={faPersonBooth} // TODO
+              icon={faLock} // TODO
               value={this.state.secret}
               secureTextEntry={true}
               keyboardType="default"
@@ -68,7 +68,7 @@ export default class SignupScreen extends Component {
               onChange={secret2 => this.setState({ secret2 })}
               placeholder="******"
               title="Secret"
-              icon={faPersonBooth} // TODO
+              icon={faLock} // TODO
               value={this.state.secret2}
               secureTextEntry={true}
               keyboardType="default"

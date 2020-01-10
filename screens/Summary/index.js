@@ -36,8 +36,9 @@ export default class SummaryScreen extends Component {
     const { navigate } = this.props.navigation;
     // Remove data from local storage
     await _removeData("timerData").then(async () => {
-      // Navigate back to timeForm page
+      // Navigate back to timeForm page if logged in
       navigate("TimeForm");
+      // TODO: Else navigate to main auth screen
     });
   }
 
