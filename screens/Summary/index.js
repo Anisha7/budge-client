@@ -61,6 +61,7 @@ export default class SummaryScreen extends Component {
             <Text style={styles.statInfo}>{spent}</Text>
             <Text style={styles.statTitle}>Total budget</Text>
             <Text style={styles.statInfo}>{budget}</Text>
+            {/* TODO: STYLES */}
             <Text style={styles.summary}>
               {savedString}
             </Text>

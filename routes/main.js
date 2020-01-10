@@ -6,18 +6,7 @@ import TimeFormScreen from '../screens/TimeForm';
 import TimerScreen from '../screens/Timer';
 import SummaryScreen from '../screens/Summary';
 
-// Authentication tabs
-// const MainNavigation = createStackNavigator(
-//   {
-//     TimeForm: { screen: TimeFormScreen }
-//   },
-//   {
-//     initialRouteName: "TimeForm",
-//     headerMode: "screen",
-//   }
-// );
-
-// Authentication tabs
+// Main tabs
 const MainNavigation = createStackNavigator(
   {
     TimeForm: { screen: TimeFormScreen },
