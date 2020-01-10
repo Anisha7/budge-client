@@ -41,7 +41,7 @@ export default class LoginScreen extends Component {
               onChange={email => this.setState({ email })}
               placeholder="example@example.com"
               title="Email"
-              icon={faEnvelope} // TODO
+              icon={faEnvelope}
               value={this.state.email}
               keyboardType="default"
             />
@@ -49,7 +49,7 @@ export default class LoginScreen extends Component {
               onChange={secret => this.setState({ secret })}
               placeholder="******"
               title="Secret"
-              icon={faLock} // TODO
+              icon={faLock}
               value={this.state.secret}
               secureTextEntry={true}
               keyboardType="default"
@@ -59,7 +59,6 @@ export default class LoginScreen extends Component {
               <Text style={styles.button}>LOGIN</Text>
             </TouchableHighlight>
           </View>
-          {/* TODO: style */}
           <View style={styles.otherAuthOptions}>
             <TouchableHighlight onPress={() => navigate("App")}>
               <Text style={styles.button}>TRY IT!</Text>

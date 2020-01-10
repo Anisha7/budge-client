@@ -43,7 +43,7 @@ export default class SignupScreen extends Component {
               onChange={name => this.setState({ name })}
               placeholder="First Last"
               title="Name"
-              icon={faUser} // TODO
+              icon={faUser}
               value={this.state.name}
               keyboardType="default"
             />
@@ -51,7 +51,7 @@ export default class SignupScreen extends Component {
               onChange={email => this.setState({ email })}
               placeholder="example@example.com"
               title="Email"
-              icon={faEnvelope} // TODO
+              icon={faEnvelope}
               value={this.state.email}
               keyboardType="default"
             />
@@ -59,7 +59,7 @@ export default class SignupScreen extends Component {
               onChange={secret => this.setState({ secret })}
               placeholder="******"
               title="Secret"
-              icon={faLock} // TODO
+              icon={faLock}
               value={this.state.secret}
               secureTextEntry={true}
               keyboardType="default"
@@ -68,7 +68,7 @@ export default class SignupScreen extends Component {
               onChange={secret2 => this.setState({ secret2 })}
               placeholder="******"
               title="Secret"
-              icon={faLock} // TODO
+              icon={faLock}
               value={this.state.secret2}
               secureTextEntry={true}
               keyboardType="default"
@@ -78,7 +78,6 @@ export default class SignupScreen extends Component {
               <Text style={styles.button}>SIGNUP</Text>
             </TouchableHighlight>
           </View>
-          {/* TODO: style */}
           <View style={styles.otherAuthOptions}>
             <TouchableHighlight onPress={() => navigate("App")}>
               <Text style={styles.button}>TRY IT!</Text>
