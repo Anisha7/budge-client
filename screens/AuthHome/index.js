@@ -23,10 +23,8 @@ export default class AuthHomeScreen extends Component {
         <View style={styles.container}>
           <Text style={styles.logo}>Budge</Text>
           <Text style={styles.description}>
-            Description to tell them to enter budget and time and how it will be
-            used... ?? Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-            sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-            aliquam erat volutpat.
+          Instant budgeting for spending on the go. 
+          You no longer have to worry about overspending. Just set a budget and start the timer! We will notify you when you've reached your goal. 
           </Text>
           {/* TODO: style */}
           <Text style={styles.recommendation}>We recommend that you signup to save and view your accomplishments.</Text>
