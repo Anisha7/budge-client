@@ -10,7 +10,8 @@ import FormFieldWrapper from "../FormFieldWrapper";
 import styles from "../commonStyles";
 import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { BASE_URL } from "react-native-dotenv";
-import { _storeData, _retrieveData } from '../../helpers/store';
+import { _storeData } from '../../helpers/store';
+import * as EmailValidator from 'email-validator';
 
 export default class SignupScreen extends Component {
   static navigationOptions = {
@@ -30,6 +31,7 @@ export default class SignupScreen extends Component {
 
   signup(navigate) {
     const name = this.state.name.split(" ");
+    // if not full name: throw err
     if (name.length < 1) {
       this.setState({ errorMessage:  "Provide first and last name" });
       return
@@ -38,13 +40,18 @@ export default class SignupScreen extends Component {
     const lname = name.length > 0 ? name[1] : "";
     const email = this.state.email;
     // if not valid email: throw err
+    if (!EmailValidator.validate(email)) {
+      this.setState({ errorMessage: "Provide a valid email" });
+      return
+    }
+    // if password don't match: throw err
     if (this.state.secret !== this.state.secret2) {
       this.setState({ errorMessage: "Passwords should match" });
       return
     }
     const password = this.state.secret;
 
-    console.log("SIGNING UP");
+    // Sign up
     fetch(`${BASE_URL}/user/`, {
       method: "POST",
       headers: {
