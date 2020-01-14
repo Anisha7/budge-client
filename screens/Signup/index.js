@@ -9,6 +9,8 @@ import {
 import FormFieldWrapper from "../FormFieldWrapper";
 import styles from "../commonStyles";
 import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import { BASE_URL } from "react-native-dotenv";
+import { _storeData, _retrieveData } from '../../helpers/store';
 
 export default class SignupScreen extends Component {
   static navigationOptions = {
@@ -21,12 +23,51 @@ export default class SignupScreen extends Component {
       name: "",
       email: "",
       secret: "",
-      secret2: ""
+      secret2: "",
+      errorMessage: "",
     };
   }
 
-  signup() {
+  signup(navigate) {
+    const name = this.state.name.split(" ");
+    if (name.length < 1) {
+      this.setState({ errorMessage:  "Provide first and last name" });
+      return
+    }
+    const fname = name[0];
+    const lname = name.length > 0 ? name[1] : "";
+    const email = this.state.email;
+    // if not valid email: throw err
+    if (this.state.secret !== this.state.secret2) {
+      this.setState({ errorMessage: "Passwords should match" });
+      return
+    }
+    const password = this.state.secret;
+
     console.log("SIGNING UP");
+    fetch(`${BASE_URL}/user/`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ fname, lname, email, password })
+    })
+    .then(res => {
+      console.log("res: ", res);
+      if (res.ok === false) {
+        throw Error("Try again!");
+      }
+      return res.json();
+    }).then(async json => {
+      console.log("json: ", json);
+      // save authtoken in local storage
+      await _storeData('AuthToken', json.Authorization)
+      navigate("App");
+    })
+    .catch(err => {
+      this.setState({ errorMessage: err.message });
+    });
   }
 
   render() {
@@ -73,8 +114,8 @@ export default class SignupScreen extends Component {
               secureTextEntry={true}
               keyboardType="default"
             />
-            {/* <Text>{this.state.error}</Text> */}
-            <TouchableHighlight onPress={() => this.signup()}>
+            <Text>{this.state.errorMessage}</Text>
+            <TouchableHighlight onPress={() => this.signup(navigate)}>
               <Text style={styles.button}>SIGNUP</Text>
             </TouchableHighlight>
           </View>
