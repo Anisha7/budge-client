@@ -61,13 +61,11 @@ export default class SignupScreen extends Component {
       body: JSON.stringify({ fname, lname, email, password })
     })
     .then(res => {
-      console.log("res: ", res);
       if (res.ok === false) {
         throw Error("Try again!");
       }
       return res.json();
     }).then(async json => {
-      console.log("json: ", json);
       // save authtoken in local storage
       await _storeData('AuthToken', json.Authorization)
       navigate("App");
