@@ -1,14 +1,15 @@
 import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { createBottomTabNavigator, BottomTabBar } from "react-navigation-tabs";
 
 import AuthHomeScreen from '../screens/AuthHome';
 import SignupScreen from '../screens/Signup';
 import LoginScreen from '../screens/Login';
 
-import TimeFormScreen from '../screens/TimeForm';
-import TimerScreen from '../screens/Timer';
-import SummaryScreen from '../screens/Summary';
+import TimerNavigation from './tabs/timer';
+import UserNavigation from './tabs/user';
+import HistoryNavigation from './tabs/history';
 
 // Authentication tabs
 const AuthNavigation = createStackNavigator(
@@ -23,23 +24,37 @@ const AuthNavigation = createStackNavigator(
   }
 );
 
-// Main tabs
-const MainNavigation = createStackNavigator(
+const TabBarComponent = props => <BottomTabBar {...props} />;
+// Tabs: Settings, Home, Wallet, Goals
+const AppNavigation = createBottomTabNavigator(
   {
-    TimeForm: { screen: TimeFormScreen },
-    Timer: { screen: TimerScreen },
-    Summary: { screen: SummaryScreen }
+    Timer: TimerNavigation,
+    User: UserNavigation,
+    History: HistoryNavigation,
   },
   {
-    initialRouteName: "TimeForm",
+    initialRouteName: "Timer",
     headerMode: "screen",
+    tabBarComponent: props => (
+      <TabBarComponent
+        {...props}
+        style={{ backgroundColor: "#31323F"}}
+      />
+    ),
+    tabBarOptions: {
+      showLabel: false,
+      showIcon: true,
+      activeTintColor: '#A55FD0',
+      inactiveTintColor: '#8F8E98'
+    },
+    
   }
 );
 
 const SwitchNavigator = createSwitchNavigator(
   {
     Auth: AuthNavigation,
-    App: MainNavigation
+    App: AppNavigation
   },
   {
     initialRouteName: "Auth",
