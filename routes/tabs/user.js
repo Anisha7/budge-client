@@ -1,20 +1,15 @@
 import React from "react";
 import { createStackNavigator } from 'react-navigation-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Text } from "react-native";
+import ProfileScreen from "../../screens/Profile";
 
-const sample = () => {
-    return (
-        <Text>User page</Text>
-    )
-}
 // Settings tabs
 const UserNavigation = createStackNavigator(
     {
-        Sample: { screen: sample },
+        Profile: { screen: ProfileScreen },
     },
     {
-      initialRouteName: 'Sample',
+      initialRouteName: 'Profile',
       headerMode: 'screen',
     }
   )
