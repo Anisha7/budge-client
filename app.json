@@ -3,7 +3,7 @@
     "name": "budge-client",
     "slug": "budge-client",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
-  }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anisha.budge"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "Budge",
+  "name": "Budge"
 }
